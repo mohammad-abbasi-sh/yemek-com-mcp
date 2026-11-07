@@ -1,0 +1,137 @@
+{
+  "Data": {
+    "Recipe": [
+      {
+        "Permalink": "https://yemek.com/tarif/4-kisilik-mercimek-corbasi/",
+        "FeaturedImage": {
+          "MediaData": {
+            "ymk-medium": {
+              "Path": "https://imgrosetta.yemek.com/file/156490/156490-1250x833.jpg"
+            },
+            "ymk-thumbnail": {
+              "Path": "https://imgrosetta.yemek.com/file/156490/156490-1250x833.jpg"
+            }
+          }
+        },
+        "RecipePrepTimeText": "15dk",
+        "RecipeOrderTimeText": "",
+        "RecipeRatingOrderPoint": null,
+        "HasVideo": false,
+        "HasMultipleImages": true,
+        "AuthorSlug": "https://yemek.com/profil/filizssweetbakery/",
+        "AuthorNofollow": false,
+        "AuthorDisplayName": "filizssweetbakery",
+        "AuthorAvatarImageUrl": "https://imgrosetta.yemek.com/static/production/img/avatars/avatar4.png",
+        "Label": "ÇORBA",
+        "LabelColor": "#239b56",
+        "LabelLink": "https://yemek.com/tarif/corba/",
+        "Title": "Lokanta Usulünde: 4 Kişilik Mercimek Çorbası"
+      },
+      {
+        "Permalink": "https://yemek.com/tarif/sutlu-mercimek-corbasi/",
+        "FeaturedImage": {
+          "MediaData": {
+            "ymk-medium": {
+              "Path": "https://imgrosetta.yemek.com/file/123202/123202-1250x833.jpg"
+            },
+            "ymk-thumbnail": {
+              "Path": "https://imgrosetta.yemek.com/file/123202/123202-1250x833.jpg"
+            }
+          }
+        },
+        "RecipePrepTimeText": "5dk",
+        "RecipeOrderTimeText": "",
+        "RecipeRatingOrderPoint": 5,
+        "HasVideo": false,
+        "HasMultipleImages": true,
+        "AuthorSlug": "https://yemek.com/profil/evdekendinpisir/",
+        "AuthorNofollow": false,
+        "AuthorDisplayName": "evdekendinpisir",
+        "AuthorAvatarImageUrl": "https://imgrosetta.yemek.com/user/4c/e7/evdekendinpisir-347367.jpg",
+        "Label": "ÇORBA",
+        "LabelColor": "#239b56",
+        "LabelLink": "https://yemek.com/tarif/corba/",
+        "Title": "Mükemmel Kıvamlı: Sütlü Mercimek Çorbası"
+      },
+      {
+        "Permalink": "https://yemek.com/tarif/citir-mercimekli-marine-pancar-salatasi/",
+        "FeaturedImage": {
+          "MediaData": {
+            "ymk-medium": {
+              "Path": "https://imgrosetta.yemek.com/file/322100/322100-1250x833.jpg"
+            },
+            "ymk-thumbnail": {
+              "Path": "https://imgrosetta.yemek.com/file/322100/322100-1250x833.jpg"
+            }
+          }
+        },
+        "RecipePrepTimeText": "15dk",
+        "RecipeOrderTimeText": "",
+        "RecipeRatingOrderPoint": null,
+        "HasVideo": true,
+        "HasMultipleImages": false,
+        "AuthorSlug": "https://yemek.com/profil/dogaozer/",
+        "AuthorNofollow": false,
+        "AuthorDisplayName": "Doğa Özer",
+        "AuthorAvatarImageUrl": "https://imgrosetta.yemek.com/user/805069/dogaozer-6a5f62f51c1ea.jpg",
+        "Label": "SALATA",
+        "LabelColor": "#239b56",
+        "LabelLink": "https://yemek.com/tarif/salata/",
+        "Title": "Portakal Sulu: Çıtır Mercimekli Marine Pancar Salatası"
+      }
+    ],
+    "Posts": [
+      {
+        "Permalink": "https://yemek.com/sozluk/yesil-mercimek/",
+        "FeaturedImage": {
+          "MediaData": {
+            "ymk-medium": {
+              "Path": "https://imgrosetta.yemek.com/file/26517/26517-1250x833.jpg"
+            },
+            "ymk-thumbnail": {
+              "Path": "https://imgrosetta.yemek.com/file/26517/26517-1250x833.jpg"
+            }
+          }
+        },
+        "TitleCustomized": "Yeşil Mercimek",
+        "Title": "Yeşil Mercimek",
+        "Label": "BAKLİYAT",
+        "LabelColor": "#48BB78",
+        "LabelLink": "https://yemek.com/sozluk/bakliyat/",
+        "HasVideo": false,
+        "HasMultipleImages": false,
+        "AuthorSlug": "https://yemek.com/profil/yemekcom/",
+        "AuthorNofollow": false,
+        "AuthorDisplayName": "Yemek.com",
+        "AuthorAvatarImageUrl": "https://imgrosetta.yemek.com/user/17/45/yemekcom-5957.jpg"
+      },
+      {
+        "Permalink": "https://yemek.com/sozluk/kirmizi-mercimek/",
+        "FeaturedImage": {
+          "MediaData": {
+            "ymk-medium": {
+              "Path": "https://imgrosetta.yemek.com/file/253030/253030-1250x833.jpg"
+            },
+            "ymk-thumbnail": {
+              "Path": "https://imgrosetta.yemek.com/file/253030/253030-1250x833.jpg"
+            }
+          }
+        },
+        "TitleCustomized": "Kırmızı Mercimek",
+        "Title": "Kırmızı Mercimek",
+        "Label": "BAKLİYAT",
+        "LabelColor": "#48BB78",
+        "LabelLink": "https://yemek.com/sozluk/bakliyat/",
+        "HasVideo": false,
+        "HasMultipleImages": false,
+        "AuthorSlug": "https://yemek.com/profil/yemekcom/",
+        "AuthorNofollow": false,
+        "AuthorDisplayName": "Yemek.com",
+        "AuthorAvatarImageUrl": "https://imgrosetta.yemek.com/user/17/45/yemekcom-5957.jpg"
+      }
+    ],
+    "RecipesTotal": 533,
+    "PostsTotal": 822
+  },
+  "Total": 1355
+}
