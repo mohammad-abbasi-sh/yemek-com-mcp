@@ -20,7 +20,7 @@ popular recipes from the homepage. No login, no API key. Times are ISO 8601 \
 durations (PT10M) or Turkish shorthand (15dk); servings are \
 Turkish ("6 kişilik"). Read-only; transport uses Chrome TLS \
 impersonation with a plain-requests fallback; requests are spaced \
-~0.8s apart. Built by Mohammad Abbasi (mohammad-abbasi-sh) — Turkey \
+~0.8s apart. Built by Mohammad Abbasi (mohammad-abbasi-sh) — https://almanibama.ir · https://mabbasi.ir — Turkey \
 MCP factory.\
 """
 
