@@ -45,19 +45,58 @@ def _throttle() -> None:
     _last_fetch = time.monotonic()
 
 
+_PROFILES = ("chrome120", "chrome131", "safari17_0")
+_MAX_ATTEMPTS = 2  # one retry with the next profile
+_RETRY_BACKOFF = 1.0  # seconds between attempts
+_profile_idx = 0  # sticky: profile that last succeeded
+
+
+def _request(url: str, headers: dict, timeout: float = TIMEOUT):
+    """GET with fingerprint rotation.
+
+    Starts at the sticky profile (chrome120 on a fresh process), retries
+    once with the next profile on HTTP 403/429 or a transport error, then
+    returns the last response (so the caller raises the specific 403/429
+    error) or raises a network error if every attempt failed at the
+    transport. Added 2026-11-10 (fleet audit fix).
+    """
+    global _profile_idx
+    last_exc: Exception | None = None
+    for k in range(_MAX_ATTEMPTS):
+        profile = _PROFILES[(_profile_idx + k) % len(_PROFILES)]
+        try:
+            resp = _creq.get(url, impersonate=profile, headers=headers, timeout=timeout)
+        except Exception as e:
+            last_exc = e
+            if k + 1 < _MAX_ATTEMPTS:
+                time.sleep(_RETRY_BACKOFF)
+                continue
+            raise YemekError(f"network error fetching {url}: {e}") from e
+        if resp.status_code in (403, 429):
+            if k + 1 < _MAX_ATTEMPTS:
+                time.sleep(_RETRY_BACKOFF)
+                continue
+            return resp
+        _profile_idx = (_profile_idx + k) % len(_PROFILES)
+        return resp
+    raise YemekError(f"network error fetching {url}: {last_exc}") from last_exc
+
+
 def _get(url: str, accept_json: bool = False) -> str:
     _throttle()
     headers = dict(_HEADERS)
     if accept_json:
         headers["Accept"] = "application/json, text/plain, */*"
     try:
-        resp = _creq.get(url, impersonate="chrome120", headers=headers, timeout=TIMEOUT)
+        resp = _request(url, headers)
         status, text = resp.status_code, resp.text
     except Exception:
         # Fallback transport: plain requests with a browser UA.
         try:
             resp = _plain.get(url, headers={**headers, "User-Agent": _UA}, timeout=TIMEOUT)
             status, text = resp.status_code, resp.text
+        except YemekError:
+            raise
         except Exception as e:
             raise YemekError(f"network error fetching {url}: {e}") from e
     if status == 403:
@@ -99,3 +138,23 @@ def fetch_tarif_list(query: str | None = None) -> str:
     if query:
         url += f"?q={quote(query)}"
     return _get(url)
+
+
+def health_check() -> dict:
+    """One polite probe of the source site.
+
+    Returns {"status": "ok"|"blocked"|"error", "http_status": int|None,
+    "url": ..., "detail": ...}. Used by the `yemek_health` tool
+    and the daily smoke CI. Added 2026-11-10 (fleet audit fix).
+    """
+    url = "https://yemek.com/"
+    try:
+        fetch_home()
+    except YemekError as e:
+        msg = str(e)
+        if "403" in msg:
+            return {"status": "blocked", "http_status": 403, "url": url, "detail": msg}
+        if "429" in msg:
+            return {"status": "blocked", "http_status": 429, "url": url, "detail": msg}
+        return {"status": "error", "http_status": None, "url": url, "detail": msg}
+    return {"status": "ok", "http_status": 200, "url": url}
