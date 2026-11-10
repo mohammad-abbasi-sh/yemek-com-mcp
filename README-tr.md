@@ -13,7 +13,7 @@ MCP istemcinize ekleyin (stdio):
   "mcpServers": {
     "yemek-com": {
       "command": "uvx",
-      "args": ["yemek-com-mcp"]
+      "args": ["yemek-com-mcp==0.1.0"]
     }
   }
 }
