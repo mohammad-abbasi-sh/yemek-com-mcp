@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "yemek-com-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "Unofficial read-only MCP server for Yemek.com Turkish recipes (search, full recipes, categories, daily picks)"
 readme = "README.md"
 license = { text = "MIT" }
