@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 
 from mcp.server.fastmcp import FastMCP
 
@@ -25,8 +26,24 @@ MCP factory.\
 """
 
 
+_SOURCE = "yemek.com"
+_DISCLAIMER = "Unofficial read-only data from yemek.com; verify on the site before acting on it."
+
+
+def _envelope() -> dict:
+    return {
+        "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "source": _SOURCE,
+        "disclaimer": _DISCLAIMER,
+    }
+
+
+def _ok(payload: dict) -> str:
+    return json.dumps({**_envelope(), **payload}, ensure_ascii=False)
+
+
 def _err(e: Exception) -> str:
-    return json.dumps({"error": str(e)}, ensure_ascii=False)
+    return _ok({"error": str(e)})
 
 
 def _validate_limit(limit: int, lo: int = 1, hi: int = 30) -> int:
@@ -73,7 +90,7 @@ def yemek_search_recipes(query: str, limit: int = 10) -> str:
     except (ValueError, _http.YemekError) as e:
         return _err(e)
     data["recipes"] = data["recipes"][:limit]
-    return json.dumps({"query": query.strip(), **data}, ensure_ascii=False)
+    return _ok({"query": query.strip(), **data})
 
 
 @mcp.tool()
@@ -91,7 +108,7 @@ def yemek_get_recipe(slug: str) -> str:
         recipe = _R.parse_recipe_page(_http.fetch_recipe_page(s))
     except (ValueError, _http.YemekError) as e:
         return _err(e)
-    return json.dumps({"slug": s, **recipe}, ensure_ascii=False)
+    return _ok({"slug": s, **recipe})
 
 
 @mcp.tool()
@@ -102,7 +119,7 @@ def yemek_list_categories() -> str:
         cats = _R.parse_categories(_http.fetch_home())
     except (ValueError, _http.YemekError) as e:
         return _err(e)
-    return json.dumps({"count": len(cats), "categories": cats}, ensure_ascii=False)
+    return _ok({"count": len(cats), "categories": cats})
 
 
 @mcp.tool()
@@ -114,9 +131,7 @@ def yemek_list_trending(limit: int = 15) -> str:
         rows = _R.parse_bugun(_http.fetch_bugun())
     except (ValueError, _http.YemekError) as e:
         return _err(e)
-    return json.dumps(
-        {"count": len(rows[:limit]), "recipes": rows[:limit]}, ensure_ascii=False
-    )
+    return _ok({"count": len(rows[:limit]), "recipes": rows[:limit]})
 
 
 @mcp.tool()
@@ -128,9 +143,7 @@ def yemek_list_videos(limit: int = 10) -> str:
         rows = _R.parse_home_section(_http.fetch_home(), "Videolu Tarifler")
     except (ValueError, _http.YemekError) as e:
         return _err(e)
-    return json.dumps(
-        {"count": len(rows[:limit]), "recipes": rows[:limit]}, ensure_ascii=False
-    )
+    return _ok({"count": len(rows[:limit]), "recipes": rows[:limit]})
 
 
 @mcp.tool()
@@ -142,9 +155,17 @@ def yemek_list_popular(limit: int = 10) -> str:
         rows = _R.parse_home_section(_http.fetch_home(), "Popüler Yemek Tarifleri")
     except (ValueError, _http.YemekError) as e:
         return _err(e)
-    return json.dumps(
-        {"count": len(rows[:limit]), "recipes": rows[:limit]}, ensure_ascii=False
-    )
+    return _ok({"count": len(rows[:limit]), "recipes": rows[:limit]})
+
+
+@mcp.tool()
+def yemek_health() -> str:
+    """Check whether yemek.com is reachable right now.
+
+    Returns status ok (HTTP 200), blocked (HTTP 403/429 — bot wall or
+    rate limit) or error, plus the HTTP status and the probed URL.
+    One polite request; it does not fetch any listings."""
+    return _ok(_http.health_check())
 
 
 def main() -> None:
